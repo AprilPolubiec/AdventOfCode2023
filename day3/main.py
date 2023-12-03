@@ -11,7 +11,6 @@ def is_symbol(c: str):
     return c is not None and not c.isdigit() and not c == "."
 
 def get_neighbors(all_neighbors: [[]], current_pos: ()):
-    # print(all_neighbors, current_pos)
     row_idx = current_pos[0]
     col_idx = current_pos[1]
     num_columns = len(all_neighbors[0])
@@ -37,9 +36,7 @@ def get_parts(in_str: list[str]):
         row = char_matrix[row_idx]
         curr_digit = ""
         found_neighbor = False
-        # print("new row to check, current digit = ", curr_digit)
         for char_idx in range(len(row)):
-            # print("current digit =", curr_digit)
             char = row[char_idx]
             if not char.isdigit() and curr_digit != "":
                 if found_neighbor:
@@ -49,14 +46,14 @@ def get_parts(in_str: list[str]):
                 continue
             if char.isdigit():
                 curr_digit += char
-                # print("found digit - new curr_digit =", curr_digit)
                 neighbors = get_neighbors(char_matrix, (row_idx, char_idx))
                 # Look for neighbors that are symbols
                 for neighbor in neighbors:
                     if is_symbol(neighbor):
-                        # print("found neighbor: ", char, curr_digit)
                         found_neighbor = True
                         continue
+        if curr_digit != "" and found_neighbor:
+            parts.append(curr_digit)
     return parts
 
 def get_sum(parts):
@@ -68,6 +65,6 @@ def get_sum(parts):
 if __name__ == '__main__':
     file_content = read_file("input.txt")
     res = get_parts(file_content)
-    print(res)
+    # print(res)
     sum = get_sum(res)
     print(sum)
